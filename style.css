@@ -1,0 +1,51 @@
+
+body {
+    background:  #FF5580;
+}
+.kotak {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+}
+.kotak h2 {
+    color: #333;
+}
+.kolom {
+    text-align: left;
+}
+.kolom label {
+    font-size: 14px;
+    color: #333;
+}
+.kolom input {
+    margin-top: 5px;
+    width: 94%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #FF5580;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.btn:hover {
+    background: #FF9EAA;
+}
+.link {
+    font-size: 14px;
+    color: #333;
+}
+.link a {
+    color: #FF5580;
+    text-decoration: none;
+}
+.link a:hover {
+    color: #FF9EAA;
+}
