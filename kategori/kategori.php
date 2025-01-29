@@ -4,6 +4,14 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../login.php");
     exit();
 }
+
+// Pastikan sidebar.php ditemukan
+include_once "../sidebar.php";
+
+// Koneksi ke database
+include_once "../config.php";
+
+$result = mysqli_query($mysqli, "SELECT * FROM kategori ORDER BY id_kategori ASC");
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +20,7 @@ if (!isset($_SESSION['username'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produk - Bemira.Co</title>
+    <title>Kategori - Bemira.Co</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css">
@@ -25,52 +33,39 @@ if (!isset($_SESSION['username'])) {
         <div class="bg-image"></div>
         <div class="bg-text">
             <button class="buttonTambah">
-                <a href="tambahProduk.php"> Tambah </a> 
+                <a href="tambahKategori.php"> Tambah </a> 
+            </button>
+            <button class="buttonExport">
+                <select name="" id="">
+                    <a href="./export/export.php"><option value="kategori">kategori</option></a>
+                    <a href="export.php"><option value="produk">produk</option></a>
+                    <a href="export.php"><option value="pengambilan">pengambilan</option></a>
+                </select>
             </button>
             <br/><br/>
             <center>
                 <table class="index">
                     <tr>
                         <th>ID</th>
-                        <th>NAMA</th>
-                        <th>KATEGORI</th>
-                        <th>GAMBAR</th>
-                        <th>KETERANGAN</th>
-                        <th>HARGA</th>
-                        <th>JUMLAH</th>
+                        <th>NAMA KATEGORI</th>
                         <th>AKSI</th>
                     </tr>
                     
                     <?php 
-                    
-
-// Koneksi ke database
-include_once "../config.php";
-                    $query = "SELECT produk.*, kategori.nama_kategori FROM produk INNER JOIN kategori ON produk.id_kategori = kategori.id_kategori";
-
-                    $result = mysqli_query($mysqli, $query);
-                    
-                    while($produk = mysqli_fetch_array($result)) {
+                    while($kategori = mysqli_fetch_array($result)) {
                         echo "<tr>";
-                        echo "<td>".$produk['id_produk']."</td>";
-                        echo "<td>".$produk['nama_produk']."</td>";
-                        echo "<td>".$produk['nama_kategori']."</td>";
-                        echo "<td><img src='../img/{$produk['gambar_produk']}' alt='Gambar Produk' width='100' height='100'></td>";
-                        echo "<td>".$produk['keterangan_produk']."</td>";
-                        echo "<td>".$produk['harga_produk']."</td>";
-                        echo "<td>".$produk['stok_produk']."</td>";
+                        echo "<td>".$kategori['id_kategori']."</td>";
+                        echo "<td>".$kategori['nama_kategori']."</td>";
                         echo "<td style='padding: 0 0 0 5px;'>
-                                  <a href='editProduk.php?id_produk=$produk[id_produk]' class='buttonEditDelete'>
+                                  <a href='edit.php?id_kategori=$kategori[id_kategori]' class='buttonEditDelete'>
                                       <i class='fas fa-pencil-alt'></i>
                                   </a> | 
-                                  <a href='deleteProduk.php?id_produk=$produk[id_produk]' class='buttonEditDelete'>
+                                  <a href='delete.php?id_kategori=$kategori[id_kategori]' class='buttonEditDelete'>
                                   <i class='fas fa-trash-alt'></i>
                                   </a>
                               </td>";
                         echo "</tr>";
                     }
-                    // Pastikan sidebar.php ditemukan
-include_once "../sidebar.php";
                     ?>
                 </table>
             </center>

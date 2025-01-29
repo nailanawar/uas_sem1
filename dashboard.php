@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +16,21 @@
     <link rel="stylesheet" href="tabel.css">
 </head>
 <body>
-<div class="bg-image"></div>
-        <div class="bg-text">
+<div class="main-content">
+<div class="bg-text">
+            
             <center>
-                <table class="dashboard">
+                <table class="index">
                     <tr>
-                        <th>NAMA PRODUK</th>
+                    <th>NAMA PRODUK</th>
                         <th>KATEGORI</th>
                         <th>GAMBAR</th>
                         <th>KETERANGAN</th>
                         <th>HARGA</th>
-                        <th>STOk</th>
+                        <th>STOK</th>
                     </tr>
                     
-<?php
+                    <?php
 include_once "config.php";
 $query = "SELECT produk.*, kategori.nama_kategori FROM produk INNER JOIN kategori ON produk.id_kategori = kategori.id_kategori";
 
@@ -37,10 +46,12 @@ while($dashboard = mysqli_fetch_array($result)) {
     echo "<td>".$dashboard['stok_produk']."</td>";
     echo "</tr>";
 }
+include_once "sidebar.php";
 ?>
                 </table>
             </center>
         </div>
+
 </body>
 
 </html>
