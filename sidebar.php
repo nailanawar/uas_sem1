@@ -9,8 +9,7 @@
 
 <div class="sidebar">
     <div class="sidebar-header">
-        <i class="bx bx-store-alt"></i>
-        <!-- //ini logonya nanti ubah logo km -->
+    <i class='bx bxl-bing' style="font-size: 30px; margin-left: 10px;"></i>
         <span class="header-name">Bemira.Co</span>
     </div>
     <div class="sidebar-content">
@@ -39,7 +38,7 @@
                     <span class="link">Pengambilan</span>
                 </a>
             </li>
-            <li class="list keluar">
+            <li class="list"><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                 <a href="daftar.php" class="nav-link">
                     <i class='bx bx-log-out icon'></i>
                     <span class="link">Logout</span>

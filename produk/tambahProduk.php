@@ -8,6 +8,9 @@ if (!isset($_SESSION['username'])) {
 // Koneksi ke database
 include_once "../config.php";
 
+// Ambil id_users dari session
+$id_users = $_SESSION['id_users'];
+
 if (isset($_POST['submit'])) {
     $nama_produk = $_POST['nama_produk'];
     $id_kategori = $_POST['id_kategori'];
@@ -24,16 +27,16 @@ if (isset($_POST['submit'])) {
 
     // Cek apakah gambar berhasil dipindahkan
     if (move_uploaded_file($tmp, $path)) {
-        // Query untuk memasukkan data produk
-        $query = "INSERT INTO produk(nama_produk, id_kategori, gambar_produk, keterangan_produk, harga_produk, stok_produk) 
-                  VALUES('$nama_produk', '$id_kategori', '$gambar_produk', '$keterangan_produk', '$harga_produk', '$stok_produk')";
+        // Query untuk memasukkan data produk dengan id_users
+        $query = "INSERT INTO produk(nama_produk, id_kategori, gambar_produk, keterangan_produk, harga_produk, stok_produk, id_users) 
+                  VALUES('$nama_produk', '$id_kategori', '$gambar_produk', '$keterangan_produk', '$harga_produk', '$stok_produk', '$id_users')";
 
         // Cek query berhasil atau tidak
         if (mysqli_query($mysqli, $query)) {
-            echo "Data berhasil ditambahkan!";
-        } else {
-            echo "Error: " . mysqli_error($mysqli);
-        }
+            echo "<script>alert('Produk berhasil ditambahkan!'); window.location.href='produk.php';</script>";
+    } else {
+        echo "<script>alert('Gagal menambahkan produk')</script>";
+    }
     } else {
         echo "Gagal memindahkan file ke: " . $path;
     }
@@ -44,7 +47,7 @@ if (isset($_POST['submit'])) {
 <html>
 <head>
     <title>Tambah Produk</title>
-    <link rel="stylesheet" href="../tabel.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <center>
@@ -62,19 +65,27 @@ if (isset($_POST['submit'])) {
                         <td>Kategori</td>
                         <td>
                             <select name="id_kategori" class="isi" required>
-                                <?php
-                                $kategori = mysqli_query($mysqli, "SELECT * FROM kategori");
-                                while ($row = mysqli_fetch_assoc($kategori)) {
-                                    echo "<option value='{$row['id_kategori']}'>{$row['nama_kategori']}</option>";
-                                }
-                                ?>
+                            <?php
+// Query untuk mendapatkan kategori yang sesuai dengan id_users
+$id_users = $_SESSION['id_users'];
+$kategori = mysqli_query($mysqli, "SELECT * FROM kategori WHERE id_users = '$id_users'");
+while ($row = mysqli_fetch_assoc($kategori)) {
+    echo "<option value='{$row['id_kategori']}'>{$row['nama_kategori']}</option>";
+}
+?>
+
                             </select>
                         </td>
                     </tr>
                     <tr>
-                        <td>Gambar</td>
-                        <td><input type="file" name="gambar_produk" class="isi"></td>
-                    </tr>
+    <td>Gambar</td>
+    <td>
+        <label for="gambar_produk">pilih gambar</label>
+        <input type="file" name="gambar_produk" id="gambar_produk" hidden>
+        
+    </td>
+</tr>
+
                     <tr>
                         <td>Keterangan</td>
                         <td><input type="text" name="keterangan_produk" class="isi"></td>

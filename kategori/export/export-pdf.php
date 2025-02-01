@@ -1,45 +1,56 @@
 <?php
-include_once("../../config.php");
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit();
+}
 
-header("Content-Type: application/vnd-ms-pdf");
-header("Content-Disposition: attachment; filename=Data_Kategori.pdf");
+// Ambil id_users dari session
+$id_users = $_SESSION['id_users'];
+
+// Koneksi ke database
+include_once "../../config.php";
+
+// Update query untuk menampilkan kategori sesuai dengan id_users
+$result = mysqli_query($mysqli, "SELECT * FROM kategori WHERE id_users = '$id_users' ORDER BY id_kategori ASC");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Export</title>
+    <title>Kategori - Bemira.Co</title>
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-<div class="main-content">
-    <center><br>
-        <h1>DATA KATEGORI</h1>
-        </center>
+    <div class="main-content">
+        <div class="bg-image"></div>
         <div class="bg-text">
-            <button class="buttonTambah">
+        <button class="buttonTambah">
                 <a href="export.php"> Kembali </a> 
             </button>
+            
             <br/><br/>
             <center>
                 <table class="index">
                     <tr>
-                        <th>ID</th>
+                        <th>NO</th>
                         <th>NAMA KATEGORI</th>
                     </tr>
                     
                     <?php 
-            $result = mysqli_query($mysqli, "SELECT * FROM kategori ORDER BY id_kategori ASC");
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
-                echo "<td>".$row['id_kategori']."</td>";
-                echo "<td>".$row['nama_kategori']."</td>";
-                echo "</tr>";
-            }
-            ?>
+                    $no = 1; // Mulai nomor urut dari 1
+                    while($kategori = mysqli_fetch_array($result)) {
+                        echo "<tr>";
+                        echo "<td>".$no."</td>"; // Menampilkan nomor urut
+                        echo "<td>".$kategori['nama_kategori']."</td>";
+                        echo "</tr>";
+                        $no++; // Increment nomor urut
+                    }
+                    ?>
                 </table>
             </center>
         </div>
@@ -48,6 +59,5 @@ header("Content-Disposition: attachment; filename=Data_Kategori.pdf");
     <script>
         window.print();
     </script>
-    
 </body>
 </html>

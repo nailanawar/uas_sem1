@@ -44,10 +44,11 @@ if (isset($_POST['login'])) {
         // Ambil data pengguna
         $user = mysqli_fetch_assoc($result);
         
-        // Simpan username di session
+        // Simpan username dan id_users di session
         $_SESSION['username'] = $user['username'];
+        $_SESSION['id_users'] = $user['id_users']; // Menyimpan id_users di session
         
-        // Arahinke dashboard
+        // Arahkan ke dashboard
         echo "<script>alert('Selamat Datang');window.location.href = 'dashboard.php';</script>";
         exit();
     } else {

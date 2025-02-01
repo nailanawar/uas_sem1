@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Tambah Kategori</title>
-        <link rel="stylesheet" href="../tabel.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <center>
@@ -23,12 +23,24 @@
                 </table>
             </form>
 
-<?php
+            <?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+// Ambil id_users dari session
+$id_users = $_SESSION['id_users'];
 
 if (isset($_POST['submit'])) {
     $nama_kategori = $_POST['nama_kategori'];
+
     include_once("../config.php");
-    $result = mysqli_query($mysqli, "INSERT INTO kategori(nama_kategori) VALUES('$nama_kategori')");
+
+    // Update query untuk menyertakan id_users
+    $result = mysqli_query($mysqli, "INSERT INTO kategori (nama_kategori, id_users) VALUES ('$nama_kategori', '$id_users')");
+    
     if ($result) {
         echo "<script>alert('Kategori berhasil ditambahkan!'); window.location.href='kategori.php';</script>";
     } else {
@@ -36,6 +48,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
         </div>
         </center>
     </body>

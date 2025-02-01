@@ -6,7 +6,7 @@
   font-size: 16px;
   border-radius: 8px;
   margin-top: 20px;
-  margin-left: 135px;
+  margin-left: 110px;
 }
 .buttonTambah a {
   color: #2A3335;
@@ -36,6 +36,26 @@
   background-color: #536493; 
 }
 .buttonExport:hover a{
+  color: #F5F7F8;
+}
+.buttonKembali {
+  background-color: white;
+  border: 1px solid #EB5A3C;
+  padding: 9px 25px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-left: 8px;
+}
+.buttonKembali a {
+  color: #2A3335;
+  text-decoration: none;
+}
+.buttonKembali:hover {
+  background-color: #EB5A3C; 
+}
+.buttonKembali:hover a{
   color: #F5F7F8;
 }
 .index {
